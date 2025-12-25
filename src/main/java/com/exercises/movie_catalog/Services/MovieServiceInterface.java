@@ -8,6 +8,6 @@ import java.util.List;
 public interface MovieServiceInterface {
     MovieDTO create(Movie movie);
     List<MovieDTO> findAllMovies();
-    void updateMovie(long id, Movie movie);
+    MovieDTO updateMovie(long id, Movie movie);
     void deleteMovie(Long id);
 }

@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 public class MovieService implements MovieServiceInterface {
@@ -35,7 +33,7 @@ public class MovieService implements MovieServiceInterface {
     }
 
     @Override
-    public void updateMovie(long id, Movie movie) {
+    public MovieDTO updateMovie(long id, Movie movie) {
        movies.stream()
               .filter(m -> m.getId() == id)
                .findFirst()
@@ -46,6 +44,7 @@ public class MovieService implements MovieServiceInterface {
               });
 
 
+        return null;
     }
 
     @Override
