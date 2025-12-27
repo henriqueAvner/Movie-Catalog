@@ -1,6 +1,8 @@
 package com.exercises.movie_catalog.Services;
 import com.exercises.movie_catalog.DTOs.MovieDTO;
 import com.exercises.movie_catalog.Entities.Movie;
+import com.exercises.movie_catalog.Exceptions.MovieNotCreatedException;
+import com.exercises.movie_catalog.Exceptions.MovieNotFoundException;
 import com.exercises.movie_catalog.Mapper.MovieMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +16,27 @@ public class MovieService implements MovieServiceInterface {
     List<Movie> movies = new ArrayList<>();
 
     @Override
-    public MovieDTO create(Movie movie) {
+    public MovieDTO create(Movie movie) throws MovieNotCreatedException {
         MovieMapper createMovie = new MovieMapper();
-        return createMovie.toDTO(movie);
+        try {
+            return createMovie.toDTO(movie);
+        } catch (MovieNotCreatedException ex) {
+            throw new MovieNotCreatedException();
+        }
     }
 
     @Override
-    public List<MovieDTO> findAllMovies() {
+    public List<MovieDTO> findAllMovies() throws MovieNotFoundException {
         List<MovieDTO> listMovies = new ArrayList<>();
 
-        for (Movie movie : movies) {
-            MovieMapper currMovie = new MovieMapper();
-            MovieDTO resultMovie = currMovie.toDTO(movie);
-            listMovies.add(resultMovie);
+            for (Movie movie : movies) {
+                MovieMapper currMovie = new MovieMapper();
+                MovieDTO resultMovie = currMovie.toDTO(movie);
+                listMovies.add(resultMovie);
+            }
+        if (listMovies.isEmpty()) {
+            throw new MovieNotFoundException();
         }
-
         return listMovies;
     }
 
